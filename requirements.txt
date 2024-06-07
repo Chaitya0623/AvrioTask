@@ -2,3 +2,4 @@ plotly
 Flask
 Gunicorn
 Flask-Cors
+streamlit-plotly-events
