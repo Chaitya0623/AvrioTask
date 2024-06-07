@@ -10,11 +10,12 @@ import base64
 
 st.title('2D Data Labeling Tool')
 st.write("We have used Streamlit which serves as a frontent to create good visualizations for our tool. The entire code could be written in one python file (the one with streamlit), but we have integrated flask for creating a web framework linked via API's.")
+st.write('We have deployed the Streamlit app on Streamlit Cloud, and Backend (Flask) on Render.')
 
 uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
 if uploaded_file is not None:
     files = {'file': uploaded_file.getvalue()}
-    response = requests.post("http://127.0.0.1:5000/upload", files=files)
+    response = requests.post("https://avriotask.onrender.com/upload", files=files)
     if response.status_code == 200:
         st.success("File uploaded successfully.")
         df = pd.DataFrame(response.json())
@@ -48,7 +49,7 @@ if uploaded_file is not None:
         st.altair_chart(elbow_chart, use_container_width=True)
         st.write('As we see a sharp edge when k = 2, we use number of clusters = 2.')
 
-        response = requests.post("http://127.0.0.1:5000/cluster", json={"n_clusters": 2})
+        response = requests.post("https://avriotask.onrender.com/cluster", json={"n_clusters": 2})
         if response.status_code == 200:
             df = pd.DataFrame(response.json())
             fig = px.scatter(df, x='L1', y='L2', color='label', title="Clustered Data")
@@ -72,4 +73,4 @@ if uploaded_file is not None:
                 st.markdown(href, unsafe_allow_html=True)
 
 st.write('To access the source code of this tool, use the link below.')
-st.markdown("[GitHub Repository](https://github.com/your_username/your_repository)", unsafe_allow_html=True)
+st.markdown("[GitHub Repository](https://github.com/Chaitya0623/AvrioTask)", unsafe_allow_html=True)
