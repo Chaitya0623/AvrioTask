@@ -3,3 +3,5 @@ Flask
 Gunicorn
 Flask-Cors
 streamlit-plotly-events
+scikit-learn
+altair
