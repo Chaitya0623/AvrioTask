@@ -53,6 +53,7 @@ if uploaded_file is not None:
         if response.status_code == 200:
             df = pd.DataFrame(response.json())
             fig = px.scatter(df, x='L1', y='L2', color='label', title="Clustered Data")
+            st.write('We have used PCA to reduce the dimensions from 3 to 2.')
             st.plotly_chart(fig)
             st.write('Plotly for creating the scatter plot visualizations, for implementing the rectangular selector and manual label editing GUI. You can select a rectangular box in the following graph and enter the label you want in the input below it.')
 

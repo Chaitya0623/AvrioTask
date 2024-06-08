@@ -3,6 +3,7 @@ import pandas as pd
 from sklearn.cluster import KMeans, DBSCAN
 import os
 from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
 
 app = Flask(__name__)
 
@@ -28,8 +29,11 @@ def cluster_data():
     data = df.drop(columns=['Time'])
     scaler = StandardScaler()
     data_scaled = scaler.fit_transform(data)
-    df['label'] = kmeans.fit_predict(data_scaled)
-    return df.to_json(orient='records')
+    pca = PCA(n_components=2)
+    data_pca = pca.fit_transform(data_scaled)
+    df_clustered = pd.DataFrame(data_pca, columns=['L1', 'L2'])
+    df_clustered['label'] = kmeans.fit_predict(data_pca)
+    return df_clustered.to_json(orient='records')
 
 if __name__ == '__main__':
     app.run(port=5000)
